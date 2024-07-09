@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1 #{genre.name}
+  div
+    h2 #{t('detail.books')}
+    if genre_books.length
+      dl
+        each book in genre_books
+          dt
+            a(href=`/books/${book.id}`) #{book.title}
+          dd #{book.summary}
+    else
+      p #{t('detail.noGenreBooks')}

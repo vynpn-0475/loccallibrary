@@ -17,3 +17,7 @@ export const getBooks = async () => {
       relations: ['author', 'genres'],
   });
 }
+
+export const getBookById = async (bookId: number) => {
+  return await bookRepository.findOne({ where: { id: bookId }, relations: ['author', 'genres', 'bookInstances'] });
+};

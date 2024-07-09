@@ -16,3 +16,7 @@ export const getGenres = async () => {
       order: { name: 'ASC' }
   });
 };
+
+export const getGenreById = async (genreId: number) => {
+  return await genreRepository.findOne({ where: { id: genreId }, relations: ['books'] });
+};

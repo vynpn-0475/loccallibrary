@@ -1,8 +1,21 @@
 import {Router} from 'express';
-import { authorList } from '../controllers/Author.controller';
+import { authorList, authorDetail, authorCreate, authorDelete, authorUpdate } from '../controllers/Author.controller';
 
 const router = Router();
 
+// GET request for list of all Author items.
 router.get('/', authorList);
+
+// GET request for one Author.
+router.get('/:id', authorDetail);
+
+// POST request for creating Author.
+router.post('/create', authorCreate);
+
+// POST request to delete Author.
+router.post('/delete/:id', authorDelete);
+
+// POST request to update Author.
+router.post('/update/:id', authorUpdate);
 
 export default router;

@@ -40,6 +40,33 @@
         "failedToFetchAuthors": "Failed to fetch authors.",
         "failedToFetchBooks": "Failed to fetch authors.",
         "failedToFetchBookInstances": "Failed to fetch authors.",
-        "failedToFetchGenres": "Failed to fetch authors."
+        "failedToFetchGenres": "Failed to fetch authors.",
+        "invalidAuthorId": "Invalid author ID parameter",
+        "authorNotFound": "Author not found",
+        "invalidBookId": "Invalid book ID parameter",
+        "bookNotFound": "Book not found",
+        "invalidBookInstanceId": "Invalid book instance ID parameter",
+        "bookInstanceNotFound": "Book instance not found",
+        "invalidGenreId": "Invalid genre ID parameter",
+        "genreNotFound": "Genre not found"
+    },
+    "detail": {
+        "bookDetail": "Book Detail",
+        "authorDetail": "Author Detail",
+        "genreDetail": "Genre Detail",
+        "bookinstanceDetail": "Book Instance Detail",
+        "noBookAuthors": "This author has no books.",
+        "noBookInstances": "There are no copies of this book in the library.",
+        "noGenreBooks": "This genre has no books.",
+        "author": "Author",
+        "genre": "Genre",
+        "books": "Book",
+        "summary": "Summary",
+        "isbn": "ISBN",
+        "copies": "Copies",
+        "imprint": "Imprint",
+        "dueback": "Due Back",
+        "id": "ID",
+        "status": "Status"
     }
 }

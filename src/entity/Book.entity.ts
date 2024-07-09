@@ -22,7 +22,7 @@ export class Book extends BaseEntity {
     author!: Author;
 
     @OneToMany(() => BookInstance, instance => instance.book)
-    instances!: BookInstance[];
+    bookInstances!: BookInstance[];
 
     @ManyToMany(() => Genre)
     @JoinTable({
@@ -56,6 +56,6 @@ export class Book extends BaseEntity {
     }
 
     getInstances(): BookInstance[] {
-        return this.instances;
+        return this.bookInstances;
     }
 }
