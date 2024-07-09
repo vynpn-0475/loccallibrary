@@ -1,21 +1,18 @@
 import { Router } from 'express';
-import { bookInstanceList, bookInstanceDetail, bookInstanceCreate, bookInstanceDelete, bookInstanceUpdate } from '../controllers/BookInstance.controller';
+import { bookInstanceList, bookInstanceDetail, bookInstanceDelete, bookInstanceUpdate, bookInstanceCreateGet, bookInstanceCreatePost } from '../controllers/BookInstance.controller';
 
 const router = Router();
 
-// GET request for list of all BookInstance items.
 router.get('/', bookInstanceList);
 
-// GET request for one BookInstance.
+router.get('/create', bookInstanceCreateGet);
+
 router.get('/:id', bookInstanceDetail);
 
-// POST request for creating BookInstance.
-router.post('/create', bookInstanceCreate);
+router.post('/createPost', bookInstanceCreatePost);
 
-// POST request to delete BookInstance.
 router.post('/delete/:id', bookInstanceDelete);
 
-// POST request to update BookInstance.
 router.post('/update/:id', bookInstanceUpdate);
 
 export default router;

@@ -20,3 +20,12 @@ export const getGenres = async () => {
 export const getGenreById = async (genreId: number) => {
   return await genreRepository.findOne({ where: { id: genreId }, relations: ['books'] });
 };
+
+export const getGenreByName = async (genreName: string) => {
+  return await genreRepository.findOne({ where: { name: genreName }, relations: ['books']  });
+};
+
+export const createGenre = async (genreData: Partial<Genre>) => {
+  const genre = genreRepository.create(genreData);
+  return await genreRepository.save(genre);
+};

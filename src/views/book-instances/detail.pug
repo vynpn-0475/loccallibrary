@@ -10,11 +10,11 @@ block content
 
   p #[strong #{t('detail.status')}: ]
     if bookinstance.status == BookInstanceStatus.AVAILABLE
-      span.text-success #{bookinstance.status}
+      span #{bookinstance.status}
     else if bookinstance.status == BookInstanceStatus.MAINTENANCE
-      span.text-danger #{bookinstance.status}
+      span #{bookinstance.status}
     else
-      span.text-warning #{bookinstance.status}
+      span #{bookinstance.status}
 
   if bookinstance.status != BookInstanceStatus.AVAILABLE
     p #[strong #{t('detail.dueback')}: ] #{bookinstance.due_back}

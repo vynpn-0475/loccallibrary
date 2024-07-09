@@ -4,7 +4,7 @@ block content
   h1 #{book.title}
 
   p #[strong #{t('detail.author')}: ]
-    a(href=`/authors/${book.author.id}`) #{book.author.name}
+    a(href=`/authors/${book.author.id}`) #{book.author.first_name}
 
   p #[strong #{t('detail.summary')}:] #{book.summary}
   p #[strong #{t('detail.isbn')}:] #{book.isbn}
@@ -30,3 +30,7 @@ block content
         a(href=`/bookinstances/${bookinstance.id}`) #{bookinstance.id}
     else
       p #{t('detail.noBookInstances')}
+  p
+    a(href=`/books/update/${book.id}`) #{t('detail.edit')}
+    form(action=`/books/delete/${book.id}`, method='POST')
+    button(type='submit') #{t('detail.delete')}

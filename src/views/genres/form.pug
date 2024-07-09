@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  form(method='POST' action='createPost')
+    div
+      label(for='name') #{t('sidebar.create_genre')}:
+      input(type='text' placeholder=t('sidebar.create_genre_placeholder') name='name' required value=(undefined===genre ? '' : genre.name))
+    button(type='submit') #{t('create.genre')}
+    if errors
+      ul
+        for error in errors
+          li!= error.msg

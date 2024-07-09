@@ -2,6 +2,7 @@ extends ../layout
 
 block content
   h1 #{genre.name}
+
   div
     h2 #{t('detail.books')}
     if genre_books.length
@@ -10,5 +11,9 @@ block content
           dt
             a(href=`/books/${book.id}`) #{book.title}
           dd #{book.summary}
+          p
+            a(href=`/genres/${genre.id}/edit`) #{t('edit')}
+            form(action=`/genres/${genre.id}/delete`, method='POST')
+              button(type='submit') #{t('delete')}
     else
       p #{t('detail.noGenreBooks')}

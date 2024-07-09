@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
-import { getBookInstanceById, getBookInstances } from '../services/BookInstance.service';
+import { createBookInstance, getBookInstanceById, getBookInstances } from '../services/BookInstance.service';
 import { BookInstanceStatus } from '@src/enums/BookInstanceStatus';
+import { getBooks } from '@src/services/Book.service';
+import { body, validationResult } from 'express-validator';
 
 async function validateAndFetchBookInstance(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
@@ -38,16 +40,61 @@ export const bookInstanceDetail = asyncHandler(async (req: Request, res: Respons
     }
 });
 
-export const bookInstanceCreate = (req: Request, res: Response): void => {
-    res.send('NOT IMPLEMENTED: BookInstance create');
-};
+export const bookInstanceCreateGet = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const bookInstance = req.params.id ? await validateAndFetchBookInstance(req, res, next) : null;
+        const books = await getBooks();
+        res.render('book-instances/form', {
+            title: req.t('bookinstance.create_bookinstance'),
+            books,
+            statuses: Object.values(BookInstanceStatus),
+            bookInstance,
+        });
+    } catch (error) {
+        req.flash('error_msg', req.t('notlist.failedToFetchBooks'));
+        res.redirect('/error');
+    }
+});
+
+export const bookInstanceCreatePost = [
+    body('book').trim().isLength({ min: 1 }).escape().withMessage('book_not_specified'),
+    body('imprint').trim().isLength({ min: 1 }).escape().withMessage('imprint_empty'),
+    body('due_back').optional({ checkFalsy: true }).isISO8601().toDate().withMessage('invalid_date'),
+    body('status').trim().isIn(Object.values(BookInstanceStatus)).escape().withMessage('status_not_specified'),
+
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+        const errors = validationResult(req);
+        const bookInstance = req.params.id ? await validateAndFetchBookInstance(req, res, next) : null;
+        if (!errors.isEmpty()) {
+            const books = await getBooks();
+            res.render('book-instances/form', {
+                title: req.t('bookinstance.create_bookinstance'),
+                books,
+                statuses: Object.values(BookInstanceStatus),
+                bookInstance: req.body,
+                errors: errors.array(),
+            });
+        } else {
+            const { book, imprint, due_back, status } = req.body;
+            try {
+                await createBookInstance({ book, imprint, due_back, status });
+                req.flash('success_msg', req.t('bookinstance.success.bookInstanceCreated'));
+                res.redirect('/bookinstances');
+            } catch (err) {
+                console.error('Error creating book instance:', err.message);
+                req.flash('error_msg', req.t('error.createFail'));
+                res.redirect('/error');
+            }
+        }
+    }),
+];
 
 export const bookInstanceDelete = (req: Request, res: Response): void => {
-    const bookInstanceId = req.params.id;
-    res.send(`NOT IMPLEMENTED: BookInstance delete: ${bookInstanceId}`);
+  const bookInstanceId = req.params.id;
+  res.send(`NOT IMPLEMENTED: BookInstance delete: ${bookInstanceId}`);
 };
 
 export const bookInstanceUpdate = (req: Request, res: Response): void => {
-    const bookInstanceId = req.params.id;
-    res.send(`NOT IMPLEMENTED: BookInstance update: ${bookInstanceId}`);
+  const bookInstanceId = req.params.id;
+  res.send(`NOT IMPLEMENTED: BookInstance update: ${bookInstanceId}`);
 };

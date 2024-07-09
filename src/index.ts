@@ -46,6 +46,7 @@ AppDataSource.initialize()
     console.log("Database connected");
 
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
     app.use('/', router);
 
     app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

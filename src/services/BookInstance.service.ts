@@ -23,3 +23,15 @@ export const getBookInstances = async () => {
 export const getBookInstanceById = async (instanceId: number) => {
   return await bookInstanceRepository.findOne({ where: { id: instanceId }, relations: ['book'] });
 };
+
+export async function createBookInstance(bookInstanceInput: any): Promise<BookInstance> {
+  const { book, imprint, due_back, status } = bookInstanceInput;
+
+  const newBookInstance = new BookInstance();
+  newBookInstance.book = book;
+  newBookInstance.imprint = imprint;
+  newBookInstance.due_back = due_back;
+  newBookInstance.status = status;
+
+  return await bookInstanceRepository.save(newBookInstance);
+};
