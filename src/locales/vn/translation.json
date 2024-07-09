@@ -1,4 +1,8 @@
 {
+    "error": {
+        "title": "Lỗi",
+        "message": "Oops! Đã xảy ra lỗi."
+    },
     "home": {
         "welcome": "Chào mừng bạn đến với {{title}}",
         "content": "Nội dung",
@@ -21,5 +25,21 @@
         "create_bookinstance": "Tạo mới bản sao sách",
         "english": "Tiếng Anh",
         "vietnamese": "Tiếng Việt"
+    },
+    "list": {
+        "book": "Danh sách các quyển sách có trong thư viện",
+        "author": "Danh sách tác giả",
+        "genre": "Danh sách thể loại",
+        "bookinstance": "Danh sách bản sao sách"
+    },
+    "notlist": {
+        "noAuthors": "Không có tác giả nào.",
+        "noInstances": "Không có bản sao nào.",
+        "noBooks": "Không có sách nào.",
+        "noGenres": "Không có thể loại nào.",
+        "failedToFetchAuthors": "Lỗi khi tải danh sách tác giả.",
+        "failedToFetchBooks": "Lỗi khi tải danh sách sách.",
+        "failedToFetchBookInstances": "Lỗi khi tải danh sách bản sao sách.",
+        "failedToFetchGenres": "Lỗi khi tải danh sách thể loại."
     }
 }

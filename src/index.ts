@@ -3,6 +3,8 @@ import path from 'path';
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
 import middleware from 'i18next-http-middleware';
+import session from 'express-session';
+import flash from 'connect-flash';
 import router from './routes/index';
 import { AppDataSource } from './config/data-source';
 
@@ -26,6 +28,19 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(middleware.handle(i18next));
 
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'defaultSecret',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
+
 AppDataSource.initialize()
   .then(() => {
     console.log("Database connected");
@@ -38,7 +53,7 @@ AppDataSource.initialize()
       res.status(500).send('Internal Server Error');
     });
 
-    const PORT = process.env.PORT; 
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });

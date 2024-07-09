@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1= title
+  if authors.length
+    ul
+      each author in authors
+        li
+          a(href=`/authors/${author.id}`) #{author.first_name} (Family Name: #{author.family_name || t('notlist.unknownFamilyName')}, Born: #{author.date_of_birth || t('notlist.unknownDateOfBirth')}, Died: #{author.date_of_death || t('notlist.unknownDateOfDeath')})
+  else
+    p #{t('notlist.noAuthors')}
