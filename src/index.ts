@@ -1,29 +1,48 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
+import express, { Request, Response, NextFunction } from 'express';
+import path from 'path';
+import i18next from 'i18next';
+import Backend from 'i18next-fs-backend';
+import middleware from 'i18next-http-middleware';
+import router from './routes/index';
 import { AppDataSource } from './config/data-source';
-import authorRouter from './routes/Author.routes';
-import bookRouter from './routes/Book.routes';
-import bookInstanceRouter from './routes/BookInstance.routes';
-import genreRouter from './routes/Genre.routes';
-
-dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
 
-app.use(express.json());
+i18next
+  .use(Backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    backend: {
+      loadPath: path.join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
-AppDataSource.initialize().then(() => {
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(middleware.handle(i18next));
+
+AppDataSource.initialize()
+  .then(() => {
     console.log("Database connected");
 
-    app.use('/api', authorRouter);
-    app.use('/api', bookRouter);
-    app.use('/api', bookInstanceRouter);
-    app.use('/api', genreRouter);
+    app.use(express.json());
+    app.use('/', router);
 
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+    app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+      console.error('Error:', err);
+      res.status(500).send('Internal Server Error');
     });
-}).catch(error => {
+
+    const PORT = process.env.PORT; 
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch(error => {
     console.log("Database connection error:", error);
-});
+  });
