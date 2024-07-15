@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-    "target": "es6",                         
-    "module": "commonjs",                     
-    "outDir": "dist",                        
-    "strict": true,                           
-    "baseUrl": "./",                       
-    "esModuleInterop": true,                  
-    "skipLibCheck": true,                    
-    "forceConsistentCasingInFileNames": true,  
+    "target": "es6", 
+    "module": "commonjs", 
+    "outDir": "dist", 
+    "strict": true, 
+    "baseUrl": "./", 
+    "esModuleInterop": true, 
+    "experimentalDecorators": true, 
+    "skipLibCheck": true, 
+    "forceConsistentCasingInFileNames": true, 
     "paths": {
       "@src/*": [
         "src/*"

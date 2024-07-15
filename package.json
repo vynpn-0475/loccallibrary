@@ -10,7 +10,12 @@
     "server:start": "DEBUG=express-locallibrary:* npm run dev:start",
     "dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json",
-    "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec"
+    "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm -- -d ./src/config/data-source.ts migration:generate ./src/config/migrations/newMigration",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/config/data-source.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d ./src/config/data-source.ts",
+    "migration:auto": "npm run migration:generate -- -n InitDatabase && npm run migration:run"
   },
   "nodemonConfig": {
     "watch": [
@@ -48,10 +53,10 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cli-highlight": "^2.1.11",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.5",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "find": "^0.3.0",
@@ -66,8 +71,11 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "pug": "^3.0.3",
+    "reflect-metadata": "^0.2.2",
     "supertest": "^7.0.0",
-    "ts-command-line-args": "^2.5.1"
+    "ts-command-line-args": "^2.5.1",
+    "typeorm": "^0.3.20"
   }
 }
