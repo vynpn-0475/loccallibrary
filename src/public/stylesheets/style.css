@@ -4,5 +4,25 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: hsl(197, 60%, 52%);
+}
+
+.sidebar-nav li {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav a {
+  text-decoration: underline;
+}
+
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav strong {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }

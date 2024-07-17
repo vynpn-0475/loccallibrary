@@ -1,9 +1,10 @@
-import express, { Request, Response, NextFunction } from 'express';
-const router = express.Router();
+import { Router } from 'express';
+import { index } from '../controllers/Book.controller';
+import bookRouter from './Book.routes';
 
-/* GET home page. */
-router.get('/', function (req: Request, res: Response, next: NextFunction) {
-    res.render('index', { title: 'Express' });
-});
+const router = Router();
+
+router.get('/', index);
+router.use("/books", bookRouter);
 
 export default router;
