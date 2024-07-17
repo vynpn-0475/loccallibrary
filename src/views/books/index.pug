@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1= title
+  if books.length
+    ul
+      each book in books
+        li
+          a(href=`/books/${book.id}`) #{book.title} (Summary: #{book.summary || t('notlist.unknownSummary')}, ISBN: #{book.isbn || t('notlist.unknownISBN')}, Author: #{book.author || t('notlist.unknownAuthor')})
+  else
+    p #{t('notlist.noBooks')}

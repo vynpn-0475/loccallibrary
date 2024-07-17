@@ -1,4 +1,8 @@
 {
+    "error": {
+        "title": "Error",
+        "message": "Oops! Something went wrong."
+    },
     "home": {
         "welcome": "Welcome to {{title}}",
         "content": "Library Content",
@@ -21,5 +25,21 @@
         "create_bookinstance": "Create Book Instance",
         "english": "English",
         "vietnamese": "Vietnamese"
+    },
+    "list": {
+        "book": "Book List",
+        "author": "Author List",
+        "genre": "Genre List",
+        "bookinstance": "Book Instance List"
+    },
+    "notlist": {
+        "noAuthors": "There are no authors.",
+        "noInstances": "There are no instances.",
+        "noBooks": "There are no books.",
+        "noGenres": "There are no genres.",
+        "failedToFetchAuthors": "Failed to fetch authors.",
+        "failedToFetchBooks": "Failed to fetch authors.",
+        "failedToFetchBookInstances": "Failed to fetch authors.",
+        "failedToFetchGenres": "Failed to fetch authors."
     }
 }

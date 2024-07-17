@@ -1,19 +1,21 @@
-import { AppDataSource } from '../config/data-source';
 import { BookInstance } from '../entity/BookInstance.entity';
-import { BookInstanceStatus } from '../enums/BookInstanceStatus';
+import { AppDataSource } from '../config/data-source';
+import { BookInstanceStatus } from '@src/enums/BookInstanceStatus';
+
+const bookInstanceRepository = AppDataSource.getRepository(BookInstance);
 
 export class BookInstanceService {
-    private bookInstanceRepository = AppDataSource.getRepository(BookInstance);
-
-    async getIndexData() {
-        const numBookInstances = await this.bookInstanceRepository.count();
-        const availableBookInstancesResult = await this.bookInstanceRepository.findAndCount({
-            where: { status: BookInstanceStatus.Available }
-        });
-
-        return {
-            numBookInstances,
-            availableBookInstances: availableBookInstancesResult[1]
-        };
-    }
+  private bookInstanceRepository = AppDataSource.getRepository(BookInstance)
+  async getIndexDataBookInstances() {
+    return this.bookInstanceRepository.count()
+  }
+  async getIndexDataAvailableBookInstances() {
+    return this.bookInstanceRepository.count({ where: { status: BookInstanceStatus.Available } })
+  }
 }
+
+export const getBookInstances = async () => {
+  return bookInstanceRepository.find({
+      relations: ['book'],
+  });
+};
