@@ -40,6 +40,33 @@
         "failedToFetchAuthors": "Lỗi khi tải danh sách tác giả.",
         "failedToFetchBooks": "Lỗi khi tải danh sách sách.",
         "failedToFetchBookInstances": "Lỗi khi tải danh sách bản sao sách.",
-        "failedToFetchGenres": "Lỗi khi tải danh sách thể loại."
+        "failedToFetchGenres": "Lỗi khi tải danh sách thể loại.",
+        "invalidAuthorId": "Tham số ID tác giả không hợp lệ",
+        "authorNotFound": "Không tìm thấy tác giả",
+        "invalidBookId": "Tham số ID sách không hợp lệ",
+        "bookNotFound": "Không tìm thấy sách",
+        "invalidBookInstanceId": "Tham số ID bản sao sách không hợp lệ",
+        "bookInstanceNotFound": "Không tìm thấy bản sao sách",
+        "invalidGenreId": "Tham số ID thể loại không hợp lệ",
+        "genreNotFound": "Không tìm thấy thể loại"
+    },
+    "detail": {
+        "bookDetail": "Chi tiết sách",
+        "authorDetail": "Chi tiết tác giả",
+        "genreDetail": "Chi tiết thể loại",
+        "bookinstanceDetail": "Chi tiết bản sao sách",
+        "noBookAuthors": "Tác giả này không có sách nào.",
+        "noBookInstances": "Không có bản sao nào của sách này trong thư viện.",
+        "noGenreBooks": "Thể loại này không có sách nào.",
+        "authors": "Tác giả",
+        "genres": "Thể loại",
+        "books": "Các sách",
+        "summary": "Tóm tắt",
+        "isbn": "ISBN",
+        "copies": "Bản sao",
+        "imprint": "Ấn bản",
+        "dueback": "Hạn trả",
+        "id": "Mã sách",
+        "status": "Tình trạng"
     }
 }
