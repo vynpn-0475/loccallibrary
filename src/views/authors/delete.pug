@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1 #{t('authorDetail.title')}: #{author.first_name}
+  p= author.lifespan
+
+  if authorBooks.length
+    p #[strong #{t('authorDetail.deleteBooksWarning')}]
+    div(class='author-books')
+      h4  
+      dl
+        each book in authorBooks
+          dt
+            a(href=book.id) #{t('authorDetail.bookTitle')}: #{book.title}
+          dd #{t('authorDetail.bookSummary')}: #{book.summary}
+          dd #{t('authorDetail.bookIsbn')}: #{book.isBn || t('authorDetail.unknown')}
+
+  else
+    p #{t('authorDetail.deleteAuthorConfirmation')}
+    form(method='POST' action='deletePost')
+      div
+        input(type='hidden', name='authorid', value=author.id)
+      button #{t('authorDetail.deleteButton')}

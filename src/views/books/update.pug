@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1= title
+
+  form(action=`updatePost/${book.id}` method="POST")
+    div
+      label(for="title") #{t('update_book_form.title_label')}:
+      input(type="text" name="title" value=book.title required)
+
+    div
+      label(for="author") #{t('update_book_form.author_label')}:
+      select(name="author" required)
+        each author in authors
+          option(value=author.id selected=(book.author && book.author.id === author.id))= `${author.first_name} ${author.family_name}`
+
+    div
+      label(for="summary") #{t('update_book_form.summary_label')}:
+      textarea(name="summary" required)= book.summary
+
+    div
+      label(for="isbn") #{t('update_book_form.isbn_label')}:
+      input(type="text" name="isbn" value=book.isbn required)
+
+    div
+      label(for="genres") #{t('update_book_form.genres_label')}:
+      select(name="genre" multiple)
+        each genre in genres
+          option(value=genre.id selected=(book.genres.some(g => g.id === genre.id)))= genre.name
+
+    div
+      button(type="submit" class="btn btn-primary") #{t('update_book_form.update_button')}
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

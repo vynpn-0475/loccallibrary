@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  form(method='POST' action='/bookinstances/createPost')
+    div
+      label(for='book') #{t('bookinstance.create_book')}:
+      select(name='book' required)
+        each book in books
+          option(
+            value=book.id 
+            selected=(bookInstance && bookInstance.book && bookInstance.book.id === book.id)
+          ) #{book.title}
+
+    div
+      label(for='imprint') #{t('bookinstance.create_imprint')}:
+      input(
+        type='text' 
+        placeholder=t('bookinstance.create_placeholder_imprint') 
+        name='imprint' 
+        required 
+        value=(bookInstance ? bookInstance.imprint : '')
+      )
+
+    div
+      label(for='due_back') #{t('bookinstance.create_date_available')}:
+      input(
+        type='date' 
+        placeholder=t('bookinstance.create_placeholder_date_available') 
+        name='due_back' 
+        required 
+        value=(bookInstance ? bookInstance.due_back : '')
+      )
+
+    div
+      label #{t('bookinstance.create_status')}:
+      each status in statuses
+        div
+          input(
+            type='radio' 
+            id=`status_${status}` 
+            name='status' 
+            value=status 
+            checked=(bookInstance && bookInstance.status === status)
+          )
+          label(for=`status_${status}`) #{status}
+
+    button(type='submit') #{t('create.bookinstance')}
+    
+    if errors
+      ul
+        each error in errors
+          li!= error.msg

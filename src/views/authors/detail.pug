@@ -1,10 +1,10 @@
 extends ../layout
 
 block content
-  h1 #{author.name}
+  h1 #{author.first_name}
   p #{author.date_of_birth} - #{author.date_of_death}
   div
-    h2 #{t('detail.books')}
+    h2 #{t('authorDetail.books')}
     if author_books.length
       dl
         each book in author_books
@@ -12,4 +12,8 @@ block content
             a(href=`/books/${book.id}`) #{book.title}
           dd #{book.summary}
     else
-      p #{t('detail.noBookAuthors')}
+      p #{t('authorDetail.noBookAuthors')}
+  p
+    a(href=`/authors/update/${author.id}`) #{t('authorDetail.editButton')}
+    form(action=`/authors/delete/${author.id}`, method='POST')
+      button(type='submit') #{t('authorDetail.deleteButton')}

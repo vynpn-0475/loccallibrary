@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
-import { getGenreById, getGenres } from '../services/Genre.service';
+import { createGenre, getGenreById, getGenreByName, getGenres } from '../services/Genre.service';
+import { body, validationResult } from 'express-validator';
 
 async function validateAndFetchGenre(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
@@ -37,16 +38,51 @@ export const genreDetail = asyncHandler(async (req: Request, res: Response, next
     }
 });
 
-export const genreCreate = (req: Request, res: Response): void => {
-    res.send('NOT IMPLEMENTED: Genre create');
-};
+export const genreCreateGet = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  res.render('genres/form', { title: req.t('create.genre') })
+})
+
+export const genreCreatePost = [
+    body('name').trim().isLength({ min: 3 }).escape(),
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => req.t('error.genreNameMinLength'));
+            req.flash('error_msg', errorMessages.join(' '));
+            return res.redirect('/genres/form');
+        }
+
+        try {
+            const genre = req.params.id ? await validateAndFetchGenre(req, res, next) : null;
+            if (genre) {
+                req.flash('error_msg', req.t('error.genreExists'));
+                return res.redirect('/genres/form');
+            }
+
+            const genreExists = await getGenreByName(req.body.name);
+            if (genreExists) {
+                req.flash('error_msg', req.t('error.genreExists'));
+                return res.redirect('/genres/form');
+            }
+
+            const { name } = req.body;
+            await createGenre({ name });
+            req.flash('success_msg', req.t('success.genreCreated'));
+            res.redirect('/genres');
+        } catch (error) {
+            console.error('Error creating genre:', error.message);
+            req.flash('error_msg', req.t('error.createFail'));
+            res.redirect('/error');
+        }
+    })
+];
 
 export const genreDelete = (req: Request, res: Response): void => {
-    const genreId = req.params.id;
-    res.send(`NOT IMPLEMENTED: Genre delete: ${genreId}`);
+  const genreId = req.params.id;
+  res.send(`NOT IMPLEMENTED: Genre delete: ${genreId}`);
 };
 
 export const genreUpdate = (req: Request, res: Response): void => {
-    const genreId = req.params.id;
-    res.send(`NOT IMPLEMENTED: Genre update: ${genreId}`);
+  const genreId = req.params.id;
+  res.send(`NOT IMPLEMENTED: Genre update: ${genreId}`);
 };
